@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Upload Book</h2>
+      <form style="width: 100%" action="/book" method="post">
+        <div style="display: flex; justify-content: space-evenly">
+          <div class="form-group">
+            <label for="bookName">Book Name</label>
+            <input type="text" id="bookName" name="bookName" required />
+          </div>
+          <div class="form-group">
+            <label for="authorName">Author Name</label>
+            <input type="text" id="authorName" name="authorName" required />
+          </div>
+          <div class="form-group">
+            <label for="publishedDate">Published Date</label>
+            <input
+              type="date"
+              id="publishedDate"
+              name="publishedDate"
+              required
+            />
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <div class="form-group">
+            <button type="submit">Upload</button>
+          </div>
+        </div>
+      </form>
+
+      {% if bookAndAuthor %}
+      <h2>Submission Details</h2>
+      <div>
+        {% for entry in bookAndAuthor %}
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border: 1px solid black;
+            padding: 10px;
+            border-bottom: 5px;
+          "
+        >
+          <div>
+            <span id="key" style="display: none"
+              ><strong>{{ entry[0] }}</strong></span
+            >
+            <span><strong>{{ entry[1] }}</strong></span>
+            <span>is published by</span>
+            <span><strong>{{ entry[2] }}</strong></span>
+            <span>on <strong>{{ entry[3] }}</strong></span>
+          </div>
+          <button class="btn" onclick="deleteValue(this)">Delete</button>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+    </div>
+  </body>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>

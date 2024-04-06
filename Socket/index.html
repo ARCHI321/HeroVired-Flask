@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.IO Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <style>
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="" id="form" autocomplete="off">
+      <input type="text" id="msg" />
+      <button>Send</button>
+    </form>
+    <script>
+      const socket = io();
+      document.getElementById("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const messageInput = document.getElementById("msg");
+        const message = messageInput.value;
+        console.log("message", message);
+        socket.emit("chat message", message);
+        messageInput.value = "";
+        return false;
+      });
+
+      socket.on("chat message", (msg) => {
+        console.log("msg", msg);
+        const messageList = document.getElementById("messages");
+        const listItems = document.createElement("li");
+        listItems.textContent = msg;
+        messageList.appendChild(listItems);
+      });
+    </script>
+  </body>
+</html>
